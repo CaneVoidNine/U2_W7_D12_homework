@@ -1,5 +1,69 @@
-const loadImg = () => {
-  const options = {
+const options = {
+  method: "GET",
+
+  headers: {
+    Authorization:
+      "Bearer 563492ad6f9170000100000176129238c31549aaa546c2bb86dc69c4",
+  },
+};
+const renderData = (data) => {
+  let parent = document.querySelector(`.album .row`);
+  parent.innerHTML = "";
+  data.forEach((img) => {
+    let card = `<div class="col-md-4 m-5">
+    <div class="img-spot" class="card mb-4 shadow-sm">
+      <img src="${img.src.medium}" />
+      <div class="card-body">
+        <p class="card-text">
+          This is a wider card with supporting text below as a natural
+          lead-in to additional content. This content is a little bit
+          longer.
+        </p>
+        <div
+          class="d-flex justify-content-between align-items-center"
+        >
+          <div class="btn-group">
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary"
+            >
+              View
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary"
+            >
+              Hide
+            </button>
+          </div>
+          <small class="text-muted">${img.id}</small>
+        </div>
+      </div>
+    </div>
+  </div>`;
+    parent.innerHTML += card;
+  });
+};
+const loadImg = (query) => {
+  fetch(`https://api.pexels.com/v1/search?query=${query}`, options)
+    .then((response) => response.json())
+    .then((data) => {
+      renderData(data.photos);
+    })
+    .catch((err) => console.log(err));
+};
+
+window.onload = () => {
+  let loadButton = document.getElementById("load");
+  let loadSecButton = document.getElementById("load-sec");
+  loadButton.addEventListener("click", () => {
+    loadImg("dog");
+  });
+  loadSecButton.addEventListener("click", () => {
+    loadImg("cat");
+  });
+};
+/*const options = {
     method: "GET",
 
     headers: {
@@ -8,52 +72,4 @@ const loadImg = () => {
     },
   };
 
-  fetch("https://api.pexels.com/v1/search?query=dog", options)
-    .then((response) => response.json())
-    .then((dogsList) => {
-      let imagePlace = document.querySelector(".img-spot");
-      //let removeSvg = document.querySelector();
-      for (let i = 0; i < dogsList.photos.length; i++) {
-        const dogs = dogsList.photos[i];
-        const dogImg = document.createElement("img");
-        dogImg.src = dogsList.photos[i].src.medium;
-        dogImg.classList.add("card-img-top");
-
-        imagePlace.appendChild(dogImg);
-      }
-    })
-
-    .catch((err) => console.error(err));
-};
-
-const loadSecImg = () => {
-  const options = {
-    method: "GET",
-
-    headers: {
-      Authorization:
-        "Bearer 563492ad6f9170000100000176129238c31549aaa546c2bb86dc69c4",
-    },
-  };
-
-  fetch("https://api.pexels.com/v1/search?query=cat", options)
-    .then((response) => response.json())
-    .then((dogsList) => {
-      let imagePlace = document.querySelector(".img-spot");
-      //let removeSvg = document.querySelector();
-      for (let i = 0; i < dogsList.photos.length; i++) {
-        const dogs = dogsList.photos[i];
-        const dogImg = document.createElement("img");
-        dogImg.src = dogsList.photos[i].src.medium;
-        dogImg.classList.add("card-img-top");
-
-        imagePlace.appendChild(dogImg);
-      }
-    })
-
-    .catch((err) => console.error(err));
-};
-
-const removeCard = () => {
-  butt = document.querySelector("");
-};
+  fetch("https://api.pexels.com/v1/search?query=dog", options)*/
