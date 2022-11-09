@@ -6,6 +6,9 @@ const options = {
       "Bearer 563492ad6f9170000100000176129238c31549aaa546c2bb86dc69c4",
   },
 };
+const removeCard = (e) => {
+  e.target.closest(".col-md-4").remove();
+};
 const renderData = (data) => {
   let parent = document.querySelector(`.album .row`);
   parent.innerHTML = "";
@@ -32,6 +35,7 @@ const renderData = (data) => {
             <button
               type="button"
               class="btn btn-sm btn-outline-secondary"
+              onclick="removeCard(event)"
             >
               Hide
             </button>
